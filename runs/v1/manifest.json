@@ -1,0 +1,12 @@
+{
+  "name": "v1",
+  "rubric_path": "prompts/rubric_v1.md",
+  "rubric_sha256": "ced20412b4ae91f27873b1cee8b9806b60d67846e88d4f957b9d3496e982c00c",
+  "model": "claude-sonnet-5-5",
+  "effort": "low",
+  "thinking": "adaptive",
+  "max_tokens": 4096,
+  "eval_set_path": "data/eval_set.jsonl",
+  "eval_set_sha256": "153f0afd98d6cd352cda60efa600b506b0390e1538fab0964787836a1673ca94",
+  "harness_version": "0.1.0"
+}

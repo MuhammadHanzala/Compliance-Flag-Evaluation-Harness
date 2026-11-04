@@ -1,0 +1,31 @@
+# Keep the build context to what is committed. Patterns are relative to the root;
+# use **/ to match at any depth. Last matching line wins.
+.git
+.github
+.venv
+venv/
+**/__pycache__
+**/*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+**/*.egg-info
+
+# Run output is mounted at run time, never baked in.
+runs/
+reports/
+
+# Secrets and local notes stay on the host.
+.env
+.env.*
+!.env.example
+BRIEF.md
+
+# Docker files themselves are not needed inside the image.
+Dockerfile
+compose.yaml
+.dockerignore

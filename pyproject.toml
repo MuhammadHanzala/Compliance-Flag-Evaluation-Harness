@@ -1,0 +1,42 @@
+[project]
+name = "compliance-flag-eval"
+version = "0.1.0"
+description = "Measure and reduce false-positive flags from an LLM compliance reviewer."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=2.3,<3",
+    "langgraph>=1.2.19,<2",
+]
+
+[project.scripts]
+evalharness = "evalharness.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.13.6,<0.14"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "evalharness"
+module-root = ""
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["*.md"]
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.pytest]
+minversion = "9.0"
+addopts = ["-ra", "-q"]
+testpaths = ["tests"]
+strict = true
+# langsmith (pulled in by langgraph) still calls asyncio.iscoroutinefunction, deprecated in 3.14+.
+filterwarnings = ["ignore:'asyncio.iscoroutinefunction' is deprecated:DeprecationWarning:langsmith"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.3",
+]

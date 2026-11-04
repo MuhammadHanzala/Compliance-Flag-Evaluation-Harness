@@ -1,0 +1,37 @@
+# mkdir -p runs reports   (otherwise Docker creates them owned by root)
+# docker compose run --rm harness validate data/eval_set.jsonl
+# docker compose --profile dev run --rm check
+name: compliance-flag-eval
+
+services:
+  harness:
+    build:
+      context: .
+      target: runtime
+    image: compliance-flag-eval:local
+    # Rebuild on every run so code changes are never served from a stale image (cached: ~seconds).
+    pull_policy: build
+    # tini as PID 1 forwards Ctrl-C / docker stop to the CLI.
+    init: true
+    # bash does not export UID/GID: run "export UID GID=$(id -g)" first.
+    user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      # Only this key is passed in, at run time. Empty is fine for validate/agreement/compare.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      HOME: /tmp
+    volumes:
+      - ./runs:/app/runs
+      - ./reports:/app/reports
+      # Mounted read-only so host edits apply without a rebuild.
+      - ./data:/app/data:ro
+      - ./prompts:/app/prompts:ro
+      - ./config:/app/config:ro
+
+  check:
+    profiles: [dev]
+    build:
+      context: .
+      target: dev
+    image: compliance-flag-eval:dev
+    pull_policy: build
+    init: true

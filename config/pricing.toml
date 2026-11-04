@@ -1,0 +1,21 @@
+# USD per million tokens, from https://platform.claude.com/docs/en/about-claude/pricing
+# Checked 2026-11-02. Re-check before every live run.
+# Cache writes are 5-minute TTL writes; cache prices are multipliers of the input price.
+
+[models.claude-sonnet-5-5]
+input_per_mtok = 2.00
+output_per_mtok = 10.00
+cache_write_multiplier = 1.25
+cache_read_multiplier = 0.05  # Sonnet 5.5 and Opus 5.5 cache reads are 5% of input
+
+[models.claude-sonnet-5]
+input_per_mtok = 2.00
+output_per_mtok = 10.00
+cache_write_multiplier = 1.25
+cache_read_multiplier = 0.10
+
+[models.claude-opus-5-5]
+input_per_mtok = 4.00
+output_per_mtok = 20.00
+cache_write_multiplier = 1.25
+cache_read_multiplier = 0.05
